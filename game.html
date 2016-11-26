@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+    <title>My fancy game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=.7, maximum-scale=1, user-scalable=no">
+    <style>
+            @font-face {
+                font-family: gameFont;
+                src: url(font/BACKTO19.TTF);
+            }
+            #scoretag{
+                font-family: gameFont;
+                color: white;  /*or black what do you think??*/
+            }
+			canvas {
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				background: transparent;
+			}
+			#background {
+				z-index: -2;
+			}
+			#main {
+				z-index: -1;
+			}
+		</style>
+</head>
+<body>
+  <!-- Header section containing logo -->
+  <header class="mdl-layout__header mdl-color-text--white mdl-color--light-blue-700;" style="width: 400px;">
+    <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid" style="float: right;">
+
+      <div id="user-container">
+        <div hidden id="user-pic"></div>
+        <div hidden id="user-name"></div>
+        <button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+          Sign-out
+        </button>
+        <button hidden id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+          <i class="material-icons">account_circle</i>Sign-in with Google
+        </button>
+      </div>
+    </div>
+    <h3 id="scoretag"> Score: <span id="score"></span></h3>
+  </header>
+    
+    
+<canvas id="main" style="border:1px solid #000"></canvas>
+<canvas id="background" style="border:1px solid #000;"></canvas>
+<script src="js/game.js"></script>
+    
+<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-database.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBNg1n7ulVf11KeSvwApneT4Qn1A0iTD0g",
+    authDomain: "busy-bird.firebaseapp.com",
+    databaseURL: "https://busy-bird.firebaseio.com",
+    storageBucket: "busy-bird.appspot.com",
+    messagingSenderId: "255425807828"
+  };
+  firebase.initializeApp(config);
+</script>
+
+<script>
+    // Get a reference to the database service
+    var database = firebase.database();
+    
+    function writeUserData(userId, name, email, imageUrl, score) {
+      firebase.database().ref('users/' + userId).set({
+        username: name,
+        email: email,
+        profile_picture : imageUrl,
+        score: score
+      });
+    }
+</script>
+        
+</body>
+</html>
