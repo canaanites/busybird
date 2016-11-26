@@ -87,9 +87,9 @@ function drawImage(time){
 /**************************************
  * cool imgs :)
  **************************************/
-var bird_img = new Image();  bird_img.src = "imgs/PNG/Frame-1.png";
-var wall_img = new Image();  wall_img.src = "imgs/wall3.png";
-var fire = new Image();      fire.src = "imgs/fir3.png";
+var bird_img = new Image();  bird_img.src = "../imgs/PNG/Frame-1.png";
+var wall_img = new Image();  wall_img.src = "../imgs/wall3.png";
+var fire = new Image();      fire.src = "../imgs/fir3.png";
 
 // to count frames for the bird    
 var img_int = 0;
@@ -106,13 +106,13 @@ function update(){
     // bird animation.. let me know if you figure a better way to do it lol
     // this will switch imgs every 3 frames
     if(img_int <= 3){
-        bird_img.src = "imgs/PNG/Frame-1.png";
+        bird_img.src = "../imgs/PNG/Frame-1.png";
     }else if (img_int <= 6){
-        bird_img.src = "imgs/PNG/Frame-2.png";
+        bird_img.src = "../imgs/PNG/Frame-2.png";
     }else if (img_int <= 9){
-        bird_img.src = "imgs/PNG/Frame-3.png";
+        bird_img.src = "../imgs/PNG/Frame-3.png";
     }else if (img_int <= 12){
-        bird_img.src = "imgs/PNG/Frame-4.png";
+        bird_img.src = "../imgs/PNG/Frame-4.png";
     }else{
         img_int = 0;
         bird_img.src = "imgs/PNG/Frame-1.png";
