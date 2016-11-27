@@ -2,7 +2,7 @@
 Busy Bird is a game just like Flappy Bird. It was built from the scratch for education purposes. (not the imgs)
 
 ### Live Demo
-[busybird.moekanan.com](busybird.moekanan.com)
+[busybird.moekanan.com](http://busybird.moekanan.com)
 #### Or
 [https://canaanites.github.io/Busy-Bird/busybird](https://canaanites.github.io/Busy-Bird/busybird)
 
