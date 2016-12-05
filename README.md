@@ -17,4 +17,4 @@ Busy Bird is a game just like Flappy Bird. It was built from the scratch for edu
     - map difficulty, speed, colors etc..
   - add user menu
   - save score into the database
-  - display the highest 100 scores for all players
+  - display the highest 10 scores for all players
