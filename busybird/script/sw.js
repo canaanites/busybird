@@ -1,12 +1,17 @@
 var CACHE_NAME = 'BusyBird-v1';
 var urlsToCache = [
-  '/',
-  '/imgs/PNG/frame-1.png',
-  '/imgs/PNG/frame-2.png',
-  '/imgs/PNG/frame-3.png',
-  '/imgs/PNG/frame-4.png',
-  '/imgs/bg1.png',
-  '/script/game.js'
+  '/busybird/',
+  '/busybird/imgs/PNG/frame-1.png',
+  '/busybird/imgs/PNG/frame-2.png',
+  '/busybird/imgs/PNG/frame-3.png',
+  '/busybird/imgs/PNG/frame-4.png',
+    
+  '/busybird/imgs/wall-2.png',
+  '/busybird/imgs/wall-3.png',
+  '/busybird/imgs/wall-1.png',
+    
+  '/busybird/imgs/bg1.png',
+  '/busybird/script/game.js'
 ];
 
 self.addEventListener('install', function(event) {

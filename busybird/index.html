@@ -3,14 +3,17 @@
 <head>
     <title>My fancy game</title>
     <meta name="viewport" content="width=device-width, initial-scale=.7, maximum-scale=1, user-scalable=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <style>
             @font-face {
                 font-family: gameFont;
                 src: url(font/BACKTO19.TTF);
             }
             #scoretag{
+                display: none;
                 font-family: gameFont;
                 color: white;  /*or black what do you think??*/
+                /*float: left;*/
             }
 			canvas {
 				position: absolute;
@@ -18,70 +21,158 @@
 				left: 0px;
 				background: transparent;
 			}
+			button { 
+          font-family: gameFont;
+          color: white;  /*or black what do you think??*/
+          font-size: 20px;
+          text-align: center;
+          background-color: Transparent;
+          outline:none;
+      }
 			#background {
 				z-index: -2;
 			}
 			#main {
 				z-index: -1;
 			}
+        body{
+            height: 400px;
+            width: 390px;
+        }
+        #menu{
+            display: none;
+            height: 80%;
+            width: 100%;
+            background-color: rgba(79, 4, 4, 0.66);
+        }
+        #gameOver{
+            display: none;
+            height: 80%;
+            width: 100%;
+            background-color: rgba(79, 4, 4, 0.66);
+        }
+        #menuBtn{
+            float: right;
+            display: none;
+        }
+        #login{
+            text-align: center;
+            padding-top: 45%;
+        }
+        .menubars {
+            width: 35px;
+            height: 5px;
+            background-color: white;
+            margin: 6px 0;
+        }
 		</style>
 </head>
 <body>
-  <!-- Header section containing logo -->
-  <header class="mdl-layout__header mdl-color-text--white mdl-color--light-blue-700;" style="width: 400px;">
-    <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid" style="float: right;">
 
-      <div id="user-container">
-        <div hidden id="user-pic"></div>
-        <div hidden id="user-name"></div>
-        <button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
-          Sign-out
-        </button>
-        <button hidden id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
-          <i class="material-icons">account_circle</i>Sign-in with Google
-        </button>
-      </div>
-    </div>
-    <h3 id="scoretag"> Score: <span id="score"></span></h3>
-  </header>
+<div id="menuBtn" onclick="menuBtn()">
+    <div class="menubars"></div>
+    <div class="menubars"></div>
+    <div class="menubars"></div>
+</div>
+<h3 id="scoretag"> Score: <span id="score"></span></h3>
     
     
 <canvas id="main" style="border:1px solid #000"></canvas>
 <canvas id="background" style="border:1px solid #000;"></canvas>
+
+    
+<div id="header">
+    <div id="login">
+            <div id="username" style="text-align: center;"></div>
+            <button style="background-color: #d14040;">Login with Google</button>
+          </div>
+    <div id="start">
+            <button onclick="startScore()">LET'S PLAY</button>
+    </div>
+</div>      
+
+
+<div id="menu">
+        <h1 style="color:#0afe11; text-align: center;">Preferences</h1>
+        <div id="preferences" style="text-align: center">
+                <button id="easy">Easy</button>
+                <button id="medium">Medium</button>
+                <button id="hard">Hard</button>
+        </div>   
+        <br>
+        <h1 style="color:#0afe11; text-align: center;">Walls</h1>
+        <div id="walls" style="text-align: center">
+                <!--- <img src="imgs/wall-1.png" height="42" width="42">  -->
+                <button style='background-image: url("imgs/wall-1.png")' onclick="getWall(1)">wall 1</button>
+                <button style='background-image: url("imgs/wall-2.png")' onclick="getWall(2)">wall 2</button>
+                <button style='background-image: url("imgs/wall-3.png")' onclick="getWall(3)">wall 3</button>
+        </div>
+        
+</div>
+    
+<div id="gameOver">
+    <br>
+    <h1 style="color:#0afe11; text-align: center;">Game Over!</h1>
+    <br>
+    <div style="text-align: center">
+    <h1 style="color:#0afe11; text-align: center;">Current score: <span id="cscore"></span></h1>    
+    <h1 style="color:#0afe11; text-align: center;">Highest score: <span id="hscore"></span></h1>
+    <button id="playAgain">Play again!</button>
+    </div>
+</div>
+    
+    
+    
+<!-- Include Firebase -->
+<script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
+<!-- Include Dexie -->
+<script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
 <script src="script/game.js"></script>
     
-<!-----------------------------------------------------------
-<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
-<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-database.js"></script>
-
 <script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyBNg1n7ulVf11KeSvwApneT4Qn1A0iTD0g",
-    authDomain: "busy-bird.firebaseapp.com",
-    databaseURL: "https://busy-bird.firebaseio.com",
-    storageBucket: "busy-bird.appspot.com",
-    messagingSenderId: "255425807828"
-  };
-  firebase.initializeApp(config);
-</script>
-
-<script>
-    // Get a reference to the database service
-    var database = firebase.database();
+document.getElementById('playAgain').addEventListener("click", function() {
+    paused = false;
+    document.getElementById('gameOver').style.display = "none";
+    resetGame();
+});
     
-    function writeUserData(userId, name, email, imageUrl, score) {
-      firebase.database().ref('users/' + userId).set({
-        username: name,
-        email: email,
-        profile_picture : imageUrl,
-        score: score
-      });
+function menuBtn(){
+    start.style.display = "none";
+    var vis = document.getElementById('menu').getAttribute("style");
+    console.log(vis);
+    if (vis == "display: block;"){
+        if(isSignedIn == null || isSignedIn == undefined){
+            //hi mom
+        }else{
+            paused = false;
+            startScore();
+            requestAnimationFrame(update);
+        }
+        document.getElementById('menu').setAttribute("style", "display: none;");
+    } else {
+        if(isSignedIn == null || isSignedIn == undefined){
+            //hi mom
+        }else{
+            paused = true;
+            startScore();
+            requestAnimationFrame(update);
+        }
+        document.getElementById('menu').setAttribute("style", "display: block;");
+        
     }
+}
+function gameOver(){
+    
+}
+            
+function startScore(){  document.getElementById('scoretag').setAttribute("style", "display: block;");
+}
+function hideScore(){ 
+document.getElementById('scoretag').setAttribute("style", "display: none;");
+}     
 </script>
-------------------------------------------------------------->
-
+    
+<!-- service worker -->
 <script>
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('script/sw.js').then(function(registration) {
