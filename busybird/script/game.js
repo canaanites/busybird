@@ -33,7 +33,6 @@ fire.src = "imgs/fir3.png";
 // to count frames for the bird    
 var img_int = 0;
 
-
 //
 // Define your database
 //
@@ -66,11 +65,13 @@ var form = document.getElementById('form');
 var login = document.getElementById('login');
 var menu = document.getElementById('menu');
 var preferences = document.getElementById('preferences');
+
 var start = document.getElementById('start');
-//preferences.style.display = "none";
 start.style.display = "none";
+
 var players;
 var myPlayer;
+var scoreInfo = [];
 
 var isSignedIn;
 
@@ -91,6 +92,7 @@ var isSignedIn;
   playersRef.on("value", function(snapshot) {
     console.log(snapshot.val());
     players = snapshot.val(); 
+    scoreInfo.push(snapshot.val());
 
   }, function (errorObject) {
     console.log("The read failed: " + errorObject.code);
@@ -111,7 +113,6 @@ function writePlayerData(player) {
 var provider = new firebase.auth.GoogleAuthProvider();
 provider.addScope('https://www.googleapis.com/auth/plus.login');
 
-
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
        displayUserInformation (user);
@@ -120,7 +121,6 @@ firebase.auth().onAuthStateChanged(function(user) {
   }
 });
 
-
 login.addEventListener('click', function(event) {
 
   firebase.auth().signInWithPopup(provider).then(function(result) {
@@ -128,8 +128,8 @@ login.addEventListener('click', function(event) {
     var token = result.credential.accessToken;
     // The signed-in user info.
     var user = result.user;
-        isSignedIn = user;
-      document.getElementById('menuBtn').style.display = "block";
+    isSignedIn = user;
+    document.getElementById('menuBtn').style.display = "block";
     console.log("Authenticated successfully with payload:", user);
     
     start.style.display = "block";
@@ -137,19 +137,17 @@ login.addEventListener('click', function(event) {
     //update();
     
     login.style.display = "none";
-    console.log("HELLO");
     // 
     var playerKey = user.email.replace('.','');
-    
+      
     if (players.hasOwnProperty(playerKey)) {
-      myPlayer = players[playerKey];    
+        myPlayer = players[playerKey];    
     }
     else {
-      myPlayer = createPlayer(playerKey);
-      console.log('created ' + myPlayer);
-      writePlayerData(myPlayer);
+        myPlayer = createPlayer(playerKey);
+        console.log('created ' + myPlayer);
+        writePlayerData(myPlayer);
     }
-    
   }).catch(function(error) {
     // Handle Errors here.
     var errorCode = error.code;
@@ -162,7 +160,6 @@ login.addEventListener('click', function(event) {
   });
 
 });
-
 
 function createPlayer (playerKey) {
   console.log('creating player for ' + playerKey);
@@ -180,22 +177,24 @@ function displayUserInformation(user) {
       username.disabled = true;
       form.style.display = "block";
       login.style.display = "none";  
-}    
+}  
 
-
-//menu.addEventListener('click', function(event) {
-//
-// login.style.display = "none";
-// preferences.style.display = "block";
-// 
-//});
+var scoreArray = [];
+//RETRIEVING ALL SCORES
+var nameAndScore = playersRef.orderByValue().on("value", function(snapshot) {
+  snapshot.forEach(function(data) {
+  scoreArray.push(data.val().score);
+  console.log(data.key + " had a high score of " + data.val().score);
+  })
+});
+//SCORE ARRAY CONTAINS ALL THE HIGH SCORES ALTHOUGH THEY AREN'T BOUNDED TO THE USERS
+console.log(scoreArray);
+/************************************************
+*
+*
+*************************************************/
 
 var difficulty = {name: "Medium", speed: 2, clearance: 0.35};
-
-//preferences.addEventListener("click", function(event) {
-//     login.style.display = "none";
-//     preferences.style.display = "block";
-//})
 
 //Easy
 preferences.getElementsByTagName('button')[0].addEventListener('click', function(event) {

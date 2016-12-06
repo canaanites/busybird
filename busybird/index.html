@@ -22,49 +22,52 @@
 				background: transparent;
 			}
 			button { 
-          font-family: gameFont;
-          color: white;  /*or black what do you think??*/
-          font-size: 20px;
-          text-align: center;
-          background-color: Transparent;
-          outline:none;
-      }
+              font-family: gameFont;
+              color: white;  /*or black what do you think??*/
+              font-size: 20px;
+              text-align: center;
+              background-color: Transparent;
+              outline:none;
+            }
 			#background {
 				z-index: -2;
 			}
 			#main {
 				z-index: -1;
 			}
-        body{
-            height: 400px;
-            width: 390px;
-        }
-        #menu{
-            display: none;
-            height: 80%;
-            width: 100%;
-            background-color: rgba(79, 4, 4, 0.66);
-        }
-        #gameOver{
-            display: none;
-            height: 80%;
-            width: 100%;
-            background-color: rgba(79, 4, 4, 0.66);
-        }
-        #menuBtn{
-            float: right;
-            display: none;
-        }
-        #login{
-            text-align: center;
-            padding-top: 45%;
-        }
-        .menubars {
-            width: 35px;
-            height: 5px;
-            background-color: white;
-            margin: 6px 0;
-        }
+            body{
+                height: 400px;
+                width: 390px;
+            }
+            #menu{
+                display: none;
+                height: 80%;
+                width: 100%;
+                background-color: rgba(79, 4, 4, 0.66);
+                font-family: gameFont;
+            }
+            #gameOver{
+                display: none;
+                height: 80%;
+                width: 100%;
+                background-color: rgba(79, 4, 4, 0.66);
+                font-family: gameFont;
+                font-size: 12px;
+            }
+            #menuBtn{
+                float: right;
+                display: none;
+            }
+            #login{
+                text-align: center;
+                padding-top: 45%;
+            }
+            .menubars {
+                width: 35px;
+                height: 5px;
+                background-color: white;
+                margin: 6px 0;
+            }
 		</style>
 </head>
 <body>
@@ -115,8 +118,8 @@
     <h1 style="color:#0afe11; text-align: center;">Game Over!</h1>
     <br>
     <div style="text-align: center">
-    <h1 style="color:#0afe11; text-align: center;">Current score: <span id="cscore"></span></h1>    
-    <h1 style="color:#0afe11; text-align: center;">Highest score: <span id="hscore"></span></h1>
+    <h1 style="color:#0afe11; text-align: center;">Score: <span id="cscore"></span></h1>    
+    <h1 style="color:#0afe11; text-align: center;">High score: <span id="hscore"></span></h1>
     <button id="playAgain">Play again!</button>
     </div>
 </div>
@@ -138,6 +141,7 @@ document.getElementById('playAgain').addEventListener("click", function() {
     
 function menuBtn(){
     start.style.display = "none";
+    document.getElementById('gameOver').style.display = "none";
     var vis = document.getElementById('menu').getAttribute("style");
     console.log(vis);
     if (vis == "display: block;"){
@@ -161,11 +165,9 @@ function menuBtn(){
         
     }
 }
-function gameOver(){
-    
-}
             
-function startScore(){  document.getElementById('scoretag').setAttribute("style", "display: block;");
+function startScore(){  
+    document.getElementById('scoretag').setAttribute("style", "display: block;");
 }
 function hideScore(){ 
 document.getElementById('scoretag').setAttribute("style", "display: none;");
