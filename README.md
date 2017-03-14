@@ -1,6 +1,8 @@
 # Busy-Bird
 Busy Bird is a game just like Flappy Bird. It was built from the scratch for education purposes.
 
+[About Page](https://canaanites.github.io/busybird/about)
+
 ### Live Demo
 [https://canaanites.github.io/busybird](https://canaanites.github.io/busybird)
 #### Or
